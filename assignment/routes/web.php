@@ -42,7 +42,11 @@ Route::get('user-age/{age}', function($age){
 
 
 
-
+Route::get('posts', function(){
+	// $listPost = App\Post::all();
+	$listPost = App\Post::where('cate_id', '=', 1)->max('id');
+	dd($listPost);
+});
 
 
 
