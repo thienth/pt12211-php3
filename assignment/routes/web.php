@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,11 +45,33 @@ Route::get('user-age/{age}', function($age){
 Route::get('posts', function(){
 	// $listPost = App\Post::all();
 	$listPost = App\Post::paginate(10);
-	return view('post-list', compact('listPost'));
-	
+	return view('post-list', compact('listPost'));	
 });
 
+Route::get('add-cate', function(){
+	$model = new App\Category;
+	$cates = App\Category::all();
+	return view('cate.form', compact('model', 'cates'));
+})->name('cate.add');
 
+
+Route::get('edit-cate/{id}', function($id){
+	$model = App\Category::find($id);
+	$cates = App\Category::all();
+	return view('cate.form', compact('model', 'cates'));
+})->name('cate.add');
+
+Route::post('cate-save', function(Request $request) {
+   	if($request->id == null){
+   		$model = new App\Category();
+   	}else{
+   		$model = App\Category::find($request->id);
+   	}
+   	$model->name = $request->name;
+   	$model->parent_id = $request->parent_id;
+   	$model->save();
+   	dd(App\Category::all());
+})->name('cate.save');
 
 
 
