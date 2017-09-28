@@ -11,7 +11,10 @@
 		<!-- {{csrf_field()}} -->
 		<input type="hidden" name="_token" value="{{csrf_token()}}">
 		<input type="hidden" name="id" value="{{$model->id}}">
-		<input type="text" name="name" placeholder="category name" value="{{$model->name}}">
+		<input type="text" name="name" placeholder="category name" value="{{old('name', $model->name)}}">
+		@if(isset($errors))
+			<span style="color: red">{{$errors->first('name')}}</span>
+		@endif
 		<br>
 		<select name="parent_id">
 			@foreach($cates as $c)

@@ -46,7 +46,25 @@ Route::get('posts', function(){
 	// $listPost = App\Post::all();
 	$listPost = App\Post::paginate(10);
 	return view('post-list', compact('listPost'));	
-});
+})->name('post.list');
+
+Route::get('add-post', function(){
+	$model = new App\Post();
+	$listCate = App\Category::all();
+	return view('post.form', compact('model', 'listCate'));
+})->name('post.add');
+
+use App\Http\Requests\SavePostRequest;
+Route::post('save-post', function(SavePostRequest $request){
+	dd($request->all());
+})->name('post.save');
+
+
+
+
+
+
+
 
 Route::get('add-cate', function(){
 	$model = new App\Category;
@@ -61,14 +79,14 @@ Route::get('edit-cate/{id}', function($id){
 	return view('cate.form', compact('model', 'cates'));
 })->name('cate.add');
 
-Route::post('cate-save', function(Request $request) {
+use App\Http\Requests\SaveCategoryRequest;
+Route::post('cate-save', function(SaveCategoryRequest $request) {
    	if($request->id == null){
    		$model = new App\Category();
    	}else{
    		$model = App\Category::find($request->id);
    	}
-   	$model->name = $request->name;
-   	$model->parent_id = $request->parent_id;
+   	$model->fill($request->all());
    	$model->save();
    	dd(App\Category::all());
 })->name('cate.save');
