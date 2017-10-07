@@ -60,12 +60,6 @@ Route::post('save-post', function(SavePostRequest $request){
 })->name('post.save');
 
 
-
-
-
-
-
-
 Route::get('add-cate', function(){
 	$model = new App\Category;
 	$cates = App\Category::all();
