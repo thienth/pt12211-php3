@@ -10,11 +10,28 @@ use Illuminate\Http\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('welcome');
 })->name('homepage');
+
+
 Route::get('admin/dashboard', 
-	'Admin\DashboardController@index')->name('dashboard');
+	'Admin\DashboardController@index')
+	->middleware('auth')
+	->name('dashboard');
+
+Route::get('dang-nhap', function(){
+	return view('login');
+})->name('login');
+
+Route::any('logout', function(){
+	Auth::logout();
+	return redirect(route('login'));
+})->name('logout');
+
+Route::post('dang-nhap', "Auth\LoginController@login");
+
+
 Route::get('admin/remove-cate/{id}', 'Admin\CategoryController@remove')->name('category.remove');
 

@@ -1,3 +1,9 @@
+@php
+use Illuminate\Support\Facades\Auth;
+@endphp
+
+<h2>Hello, Mr.{{Auth::user()->name}} <a href="{{route('logout')}}" title="">Logout</a></h2>
+
 <table class="table table-striped">
 	<thead>
 		<tr>
